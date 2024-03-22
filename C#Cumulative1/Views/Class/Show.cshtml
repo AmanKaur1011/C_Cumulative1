@@ -1,0 +1,23 @@
+﻿<!-- This view shows the data about the selected Class-->
+@model C_Cumulative1.Models.Class
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Class Information</h2>
+<div>
+    <strong>Class Id: </strong>@Model.ClassId
+</div>
+
+<div>
+    <strong>Class Code: </strong>@Model.ClassCode
+</div>
+<div>
+    <strong>Class Name: </strong>@Model.ClassName
+</div>
+<div> <strong>Teacher Id: </strong> @Model.TeacherId</div>
+<div> <strong>Start Date: </strong>@Model.StartDate</div>
+<div> <strong>Finish Date: </strong>@Model.FinishDate</div>
+
+
+

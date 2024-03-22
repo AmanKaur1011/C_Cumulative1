@@ -1,0 +1,19 @@
+﻿<!-- This View shows the list of all the teachers in the database-->
+@model IEnumerable<C_Cumulative1.Models.Teacher>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Teachers</h2>
+
+<!--Form is used to create a search text field-->
+<form action="/Teacher/List" method="GET">
+    <input type="text" name="SearchKey" />
+    <input type="Submit" value="Search" />
+</form>
+
+@foreach (var teacher in Model){
+    <div><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname</a></div>
+
+   }
+

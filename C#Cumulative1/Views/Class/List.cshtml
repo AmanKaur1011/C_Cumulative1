@@ -1,0 +1,14 @@
+﻿<!-- This View shows the list of all the classes in the database-->
+@model IEnumerable<C_Cumulative1.Models.Class>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Classes List</h2>
+
+@foreach (var uniqueclass in Model)
+{
+    <div><a href="/Class/Show/@uniqueclass.ClassId">@uniqueclass.ClassCode @uniqueclass.ClassName</a></div>
+
+
+}

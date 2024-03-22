@@ -1,0 +1,20 @@
+﻿<!-- This view shows the data about the selected teacher-->
+@model C_Cumulative1.Models.Teacher
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Show</h2>
+
+<div>
+    <strong>Teacher Name: </strong>@Model.TeacherFname @Model.TeacherLname</div>
+   <div> <strong>Employee Number: </strong> @Model.EmployeeNumber</div>
+   <div> <strong>Hire Date: </strong>@Model.HireDate</div>
+   <div><strong>Salary: $</strong>@Model.Salary</div>
+<!-- Displays  the courses the teacher is teaching-->
+   <div><strong>Courses: </strong> @foreach (var coursename in Model.courses) { 
+ 
+      @coursename<br>
+  
+   
+   }</div>

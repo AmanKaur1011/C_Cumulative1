@@ -1,0 +1,14 @@
+﻿<!-- This View shows the list of all the students in the database-->
+@model IEnumerable<C_Cumulative1.Models.Student>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Students</h2>
+
+@foreach (var student in Model)
+{
+    <div><a href="/Student/Show/@student.StudentId">@student.StudentFname @student.StudentLname</a></div>
+
+
+}
