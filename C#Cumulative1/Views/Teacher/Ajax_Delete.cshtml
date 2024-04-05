@@ -1,0 +1,23 @@
+﻿<!-- This View confirms the choice of deleting the selected teacher and send the response to the javascript method-->
+
+    @model C_Cumulative1.Models.Teacher
+    @{
+        ViewBag.Title = "Ajax_Delete";
+    }
+
+    <div>
+        <nav>
+            <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Cancel</a>
+        </nav>
+        <h2>Are you sure you want to delete @Model.TeacherFname @Model.TeacherLname having Id: @Model.TeacherId?</h2>
+        <p>This action cannot be undone.</p>
+
+        <!---DeleteTeacher() is a JS method defined in /Scripts/teacher.js-->
+
+        <button class="deletebutton" onclick="DeleteTeacher(@Model.TeacherId);">
+            Confirm Delete
+        </button>
+        <div id="outputmsg"></div>
+    </div>
+
+

@@ -1,0 +1,19 @@
+﻿<!-- This View confirms the choice of deleting the selected teacher from the database-->
+@model C_Cumulative1.Models.Teacher
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+
+<div>
+    <nav>
+        <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Cancel</a>
+    </nav>
+    <h2>Are you sure you want to delete @Model.TeacherFname @Model.TeacherLname?</h2>
+    <p>This action cannot be undone.</p>
+    <form method="POST" action="/Teacher/Delete/@Model.TeacherId">
+        <button class="deletebutton">
+            Confirm Delete
+        </button>
+    </form>
+</div>

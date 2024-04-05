@@ -5,7 +5,13 @@
 }
 
 <h2>Show</h2>
-
+<div>
+    <nav>
+        
+        <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+      &nbsp;&nbsp;<a class="deletelink" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
+    </nav>
+</div>
 <div>
     <strong>Teacher Name: </strong>@Model.TeacherFname @Model.TeacherLname</div>
    <div> <strong>Employee Number: </strong> @Model.EmployeeNumber</div>

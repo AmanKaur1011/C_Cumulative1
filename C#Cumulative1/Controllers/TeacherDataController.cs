@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using C_Cumulative1.Models;
 using MySql.Data.MySqlClient;
+using System.Web.Http.Cors;
+using Mysqlx.Datatypes;
 
 namespace C_Cumulative1.Controllers
 {    // This controller allows to  make a database connection and to access the information of  teachers table
@@ -169,7 +172,114 @@ namespace C_Cumulative1.Controllers
 
 
         }// end of FindTeacher method
-       
+
+        //Creating a Teacher 
+        /// <summary>
+        /// Recevies information about the new teacher and  enters it to the database 
+        /// </summary>
+        /// <param name="newTeacher">a teacher object which holds the information about the new Teacher</param>
+        /// <return>
+        /// </return>
+        /// <examaple>
+
+        /// POST: api/TeacherData/AddTeacher
+        /// FORM BODY/ REQUEST BODY/ POST CONTENT
+        ///  {
+        ///  "TeacherFname":"Amanpreet"
+        ///  "TeacherLame":"Kaur"
+        ///  "EmployeeNmber":"n01232345"
+        ///  "HireDate":"2023-04-12"
+        ///  "Salary":"60.80"
+        ///  }
+        /// </examaple>
+
+        [HttpPost]
+        [Route("api/TeacherData/AddTeacher")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        public void AddTeacher([FromBody]Teacher newTeacher)
+        {
+            //server side validation
+            if (newTeacher.TeacherFname == null || newTeacher.TeacherLname == null || newTeacher.EmployeeNumber == null || newTeacher.HireDate == null)
+            {
+
+                throw new ArgumentException();
+
+            }
+
+
+
+            //Debugging message
+            Debug.WriteLine(newTeacher.TeacherFname);
+            Debug.WriteLine(newTeacher.TeacherLname);
+            Debug.WriteLine(newTeacher.EmployeeNumber);
+            Debug.WriteLine(newTeacher.HireDate);
+            Debug.WriteLine(newTeacher.Salary);
+
+
+            //Instantiate an object of MySqlConnection class
+            MySqlConnection conn = School.AccessDatabase();
+
+            //Open a connection
+            conn.Open();
+            // Establish a MySql query
+            MySqlCommand cmd = conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "insert into teachers (teacherfname, teacherlname, employeenumber,hiredate,salary) values (@TeacherFname,@TeacherLname,@EmployeeNumber,@HireDate, @Salary)";
+            cmd.Parameters.AddWithValue("@TeacherFname", newTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", newTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", newTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", newTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", newTeacher.Salary);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+
+        }// end of AddTeacher method
+
+        //Delete Teacher
+        /// <summary>
+        /// Deletes  the Teacher from the database and also the relating data data from classes table too
+        /// </summary>
+        /// <param name="id">The ID of the Teacher that  need to be deleted </param>
+        /// <return></return>
+        /// <example>
+        /// POST: /api/TeacherData/DeleteTeacher/3-> the teacher will be deleted from the database whose id is 3 ,also the related data will be deleted from the classes table
+        /// </example>
+        [HttpPost]
+        [Route("api/TeacherData/DeleteTeacher/{id}")]
+         
+        public void DeleteTeacher(int id)
+        {
+            //Instantiate an object of MySqlConnection class
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            
+            //First Query-> to delete data from teh teachers table
+             cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+
+            //SecondQuery-> to delete data from the classes table
+            cmd.CommandText = "Delete from classes where teacherid=@cid";
+            cmd.Parameters.AddWithValue("@cid", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+        }
+
 
 
 

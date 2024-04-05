@@ -5,15 +5,20 @@
 }
 
 <h2>List of Teachers</h2>
-
+<div>
+    <nav>
+        <a class="navlink" href="/Teacher/New">New Teacher</a>
+    </nav>
+</div>
 <!--Form is used to create a search text field-->
 <form action="/Teacher/List" method="GET">
     <input type="text" name="SearchKey" />
     <input type="Submit" value="Search" />
 </form>
 
-@foreach (var teacher in Model){
+@foreach (var teacher in Model)
+{
     <div><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname</a></div>
 
-   }
+}
 
