@@ -1,0 +1,90 @@
+﻿<!-- This view shows the current data about the selected teacher and asks for the update in any of the information about teacher -->
+@model C_Cumulative1.Models.Teacher
+@{
+    ViewBag.Title = "Update";
+}
+
+<script>
+
+
+    function processForm() {
+        var fname = document.getElementById("TeacherFname").value;
+        var lname = document.getElementById("TeacherLname").value;
+        var employeeno = document.getElementById("EmployeeNumber").value;
+        var hiredate = document.getElementById("HireDate").value;
+        var salary = document.getElementById("Salary").value;
+        var errormsg = document.getElementById("Outmessage");
+        if (fname === "") {
+            errormsg.innerHTML = "Please fill all the fields";
+            errormsg.style.color = "red";
+            return false;
+        }
+        if (lname === "") {
+            errormsg.innerHTML = "Please fill all the fields";
+            errormsg.style.color = "red";
+            return false;
+        }
+        if (employeeno === "") {
+            errormsg.innerHTML = "Please fill all the fields";
+            errormsg.style.color = "red";
+            return false;
+        }
+        if (hiredate === "") {
+            errormsg.innerHTML = "Please fill all the fields";
+            errormsg.style.color = "red";
+            return false;
+        }
+        if (salary === "") {
+            errormsg.innerHTML = "Please fill all the fields";
+            errormsg.style.color = "red";
+            return false;
+        }
+
+
+        return true;
+
+
+
+    };
+
+</script>
+
+<h2>Update Teacher</h2>
+<nav>
+    <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Back</a>
+</nav>
+
+<form method="POST" action="/Teacher/Edit/@Model.TeacherId" onsubmit="return processForm()">
+
+    <div>
+        <label for="TeacherFname">First Name:</label>
+        <input type="text" id="TeacherFname" name="TeacherFname" value="@Model.TeacherFname" />
+
+    </div>
+    <div>
+        <label for="TeacherLname">Last Name:</label>
+        <input type="text" id="TeacherLname" name="TeacherLname" value="@Model.TeacherLname" />
+
+    </div>
+
+    <div>
+        <label for="EmployeeNumber">Employee Number:</label>
+        <input type="text" id="EmployeeNumber" name="EmployeeNumber" value="@Model.EmployeeNumber" />
+    </div>
+    <div>
+        <label for="HireDate">Hire Date:</label>
+        <input type="date" id="HireDate" name="HireDate" value="@Model.HireDate.ToString("yyyy-MM-dd")" />
+
+    </div>
+    <div>
+        <label for="Salary">Salary:</label>
+        <input type="number" id="Salary" name="Salary" step="0.01" min="0" placeholder="50.00" value="@Model.Salary" />
+
+    </div>
+
+    <div>
+        <input type="submit" value="Update Teacher" />
+    </div>
+    <div id="Outmessage"></div>
+</form>
+

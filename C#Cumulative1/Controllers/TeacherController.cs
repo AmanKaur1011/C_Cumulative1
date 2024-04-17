@@ -122,5 +122,64 @@ namespace C_Cumulative1.Controllers
             return RedirectToAction("List");
 
         }
+
+        /// <summary>
+        /// Routes to a dynamically generated "Update" Page , gathers the current data of a teacher from the database and display it on that page.
+        /// </summary>
+        /// <param name="id">Id of the Teacher</param>
+        /// <returns>A dynamic "Update Teacher" webpage which provides the current information of the  teacher and asks the user for new information as part of a form.</returns>
+        /// <example>GET : /Teacher/Update/5 -> dynamically generetaed webpage(view) where the user can update the information of the selected teacher</example>
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+            // directs to Views/Teacher/Update.cshtml
+            return View(SelectedTeacher);
+        }
+
+        public ActionResult Ajax_Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+
+        /// <summary>
+        /// Receives a POST request containing information about an existing  teacher in the system, with new values. Send this information to the API, and redirects to the "Teacher Show" page of our updated teacher.
+        /// </summary>
+        /// <param name="id">Id of the teacher to update</param>
+        /// <param name="TeacherFname">The updated first name of the teacher</param>
+        /// <param name="TeacherLname">The updated last name of the teacher</param>
+        /// <param name="EmployeeNumber">The updated employee number of the teacher.</param>
+        /// <param name="HireDate">The updated   hire date of the teacher.</param>
+        ///  /// <param name="Salary">The updated  salary of the teacher.</param>
+        /// <returns>A dynamic webpage which provides the current information of the teacher.</returns>
+        /// <example>
+        /// POST : /Teacher/Edit/11
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFname":"Amanpreet",
+        ///	"TeacherLname":"Kaur",
+        ///	"EmployeeNumber":"T678",
+        ///	"HireDate":"2023-05-05",
+        ///	"Salary" :"50.00"
+        /// }
+        /// </example>
+        [HttpPost]
+        public ActionResult Edit(int id, string TeacherFname, string TeacherLname, string EmployeeNumber, string HireDate, decimal Salary)
+        {
+            Teacher selectedTeacher = new Teacher();
+            selectedTeacher.TeacherFname = TeacherFname;
+            selectedTeacher.TeacherLname = TeacherLname;
+            selectedTeacher.EmployeeNumber = EmployeeNumber;
+            selectedTeacher.HireDate =  Convert.ToDateTime(HireDate);
+            selectedTeacher.Salary = Salary ;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(id, selectedTeacher);
+            //directs to Views/Teacher/Show/{id}
+            return RedirectToAction("Show/" + id);
+        }
     }
 }

@@ -279,7 +279,66 @@ namespace C_Cumulative1.Controllers
 
 
         }
+        /// <summary>
+        /// Update a teacher  with the new values in the database. 
+        /// </summary>
+        /// <param name="id">The id of the teacher that is being updated</param>
+        /// <param name="selectedTeacher">A Teacher object refering towards the teacher which has been updated with the new values</param>
+        /// <example>
+        /// POST api/TeacherData/UpdateTeacher/11 
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	"TeacherFname":"Amanpreet",
+        ///	"TeacherLname":"Kaur",
+        ///	"EmployeeNumber":"T678",
+        ///	"HireDate":"2023-05-05",
+        ///	"Salary" :"50.00"
+        /// }
+        /// </example>
+        /// <example>
+        /// Using a Curl Request  with a JSON object 
+        /// POST ->curl -d @teacher.json -H "Content-Type: application/json" https://localhost:44396/api/TeacherData/UpdateTeacher/44 xam-> updates the teacher information in the database having id =44.
+        ///teacher.json file has the new data for a teacher having id =44
+        /// {
+        ///       "TeacherFname": "Sandeep",
+		///       "TeacherLname": "Kaur",
+		///       "EmployeeNumber": "G678",
+		///       "HireDate":"2023-09-09",
+		///       "Salary": 60.90
+        ///    }
+        /// 
+        /// </example>
+        [HttpPost]
+        [Route("api/TeacherData/UpdateTeacher/{id}")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
+        public void UpdateTeacher(int id, [FromBody] Teacher selectedTeacher)
+        {
+            //Instantiate an object of MySqlConnection class
+            MySqlConnection Conn = School.AccessDatabase();
 
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname,employeenumber=@EmployeeNumber, hiredate= @HireDate , salary= @Salary  where teacherid=@TeacherId";
+            cmd.Parameters.AddWithValue("@TeacherFname", selectedTeacher.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", selectedTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", selectedTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", selectedTeacher.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", selectedTeacher.Salary);
+            cmd.Parameters.AddWithValue("@TeacherId", id );
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+        }
 
 
 
