@@ -5,7 +5,7 @@
 }
 
 <script>
-
+    //Client side validation
 
     function processForm() {
         var fname = document.getElementById("TeacherFname").value;
@@ -13,34 +13,54 @@
         var employeeno = document.getElementById("EmployeeNumber").value;
         var hiredate = document.getElementById("HireDate").value;
         var salary = document.getElementById("Salary").value;
-        var errormsg = document.getElementById("Outmessage");
+        var msg = document.getElementById("Outmessage");
+        var fnameError = document.getElementById("fnameError");
+        var lnameError = document.getElementById("lnameError");
+        var empNoError = document.getElementById("empNoError");
+        var hiredateError = document.getElementById("hiredateError");
+        var salaryError = document.getElementById("salaryError");
         if (fname === "") {
-            errormsg.innerHTML = "Please fill all the fields";
-            errormsg.style.color = "red";
+            fnameError.innerHTML = "Please fill the Teacher First Name";
+            fnameError.style.color = "red";
             return false;
+        }
+        else {
+            fnameError.innerHTML = "";
         }
         if (lname === "") {
-            errormsg.innerHTML = "Please fill all the fields";
-            errormsg.style.color = "red";
+            lnameError.innerHTML = "Please fill the Teacher Last Name";
+            lnameError.style.color = "red";
             return false;
+        }
+        else {
+            lnameError.innerHTML = "";
         }
         if (employeeno === "") {
-            errormsg.innerHTML = "Please fill all the fields";
-            errormsg.style.color = "red";
+            empNoError.innerHTML = "Please fill the Employee Number";
+            empNoError.style.color = "red";
             return false;
+        }
+        else {
+            empNoError.innerHTML = "";
         }
         if (hiredate === "") {
-            errormsg.innerHTML = "Please fill all the fields";
-            errormsg.style.color = "red";
+            hiredateError.innerHTML = "Please select the hire date ";
+            hiredateError.style.color = "red";
             return false;
+        }
+        else {
+            hiredateError.innerHTML = "";
         }
         if (salary === "") {
-            errormsg.innerHTML = "Please fill all the fields";
-            errormsg.style.color = "red";
+            salaryError.innerHTML = "Please enter the salary of teacher";
+            salaryError.style.color = "red";
             return false;
         }
+        else {
+            salaryError.innerHTML = "";
+        }
 
-
+       
         return true;
 
 
@@ -59,27 +79,30 @@
     <div>
         <label for="TeacherFname">First Name:</label>
         <input type="text" id="TeacherFname" name="TeacherFname" value="@Model.TeacherFname" />
+        <span id="fnameError"></span>
 
     </div>
     <div>
         <label for="TeacherLname">Last Name:</label>
         <input type="text" id="TeacherLname" name="TeacherLname" value="@Model.TeacherLname" />
+        <span id="lnameError"></span>
 
     </div>
 
     <div>
         <label for="EmployeeNumber">Employee Number:</label>
         <input type="text" id="EmployeeNumber" name="EmployeeNumber" value="@Model.EmployeeNumber" />
+        <span id="empNoError"></span>
     </div>
     <div>
         <label for="HireDate">Hire Date:</label>
         <input type="date" id="HireDate" name="HireDate" value="@Model.HireDate.ToString("yyyy-MM-dd")" />
-
+        <span id="hiredateError"></span>
     </div>
     <div>
         <label for="Salary">Salary:</label>
         <input type="number" id="Salary" name="Salary" step="0.01" min="0" placeholder="50.00" value="@Model.Salary" />
-
+        <span id="salaryError"></span>
     </div>
 
     <div>

@@ -1,4 +1,5 @@
-﻿@model C_Cumulative1.Models.Teacher
+﻿<!-- This View  takes the data of a  updated teacher and send it to the javascript method-->
+@model C_Cumulative1.Models.Teacher
 @{
     ViewBag.Title = "Ajax_Update";
 }
@@ -43,7 +44,7 @@
 
     </div>
     <!---UpdateTeacher() is a JS method defined in /Scripts/teacher.js-->
-    <button class="updatebutton" onclick = "UpdateTeacher(@Model.TeacherId);">
+    <button class="updatebutton" onclick="UpdateTeacher(@Model.TeacherId);">
         Update Teacher
     </button>
     <div id="msg"></div>

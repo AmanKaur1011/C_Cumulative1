@@ -136,7 +136,12 @@ namespace C_Cumulative1.Controllers
             // directs to Views/Teacher/Update.cshtml
             return View(SelectedTeacher);
         }
-
+        /// <summary>
+        /// This method will direct to a webpage  asking to update a particular teacher using AJAX.
+        /// </summary>
+        /// <param name="id"> the id of the  selected teacher that  need to be updated </param>
+        /// <returns> a view with the updated  teacher information</returns>
+        /// <example> GET :/Teacher/Ajax_Update/{id} ->  render a web page (view) with updated teacher information</example>
         public ActionResult Ajax_Update(int id)
         {
             TeacherDataController controller = new TeacherDataController();
